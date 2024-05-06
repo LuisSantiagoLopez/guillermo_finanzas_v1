@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload Documents</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -27,28 +27,6 @@
             font-weight: 700;
             margin-bottom: 20px;
         }
-        .accordion-item {
-            border: none;
-        }
-        .accordion-button {
-            background: #000;
-            color: #fff;
-            font-size: 0.75em;
-            text-align: center;
-            padding: 5px 10px;
-            width: fit-content;
-            margin: 0 auto 10px;
-            border-radius: 5px;
-        }
-        .accordion-button:not(.collapsed) {
-            color: #fff;
-            background: #333;
-        }
-        .accordion-body {
-            text-align: center;
-            font-size: 0.9em;
-            padding: 10px;
-        }
         form {
             margin-top: 20px;
         }
@@ -68,31 +46,48 @@
         button:hover {
             background: #0056b3;
         }
+        .tooltip-list {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .tooltip-list:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tooltip-content {
+            visibility: hidden;
+            opacity: 0;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: left;
+            border-radius: 5px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Hola Guillermo, soy tu asistente de Excel personalizado.</h1>
         <p>Por favor, sube los siguientes documentos:</p>
-        <div class="accordion" id="documentsAccordion">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        Lista de documentos
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#documentsAccordion">
-                    <div class="accordion-body">
-                        Indeval_1415.csv<br>
-                        Indeval_1830.csv<br>
-                        PIP.xls<br>
-                        PIPViejo.xls<br>
-                        VectorAnalitico24h.xls<br>
-                        VectorAnaliticoMD.xls<br>
-                        VectorViejo.xls<br>
-                        Resumen_de_Mercado.xls
-                    </div>
-                </div>
+        <div class="tooltip-list">
+            Lista de documentos
+            <div class="tooltip-content">
+                Indeval_1415.csv<br>
+                Indeval_1830.csv<br>
+                PIP.xls<br>
+                PIPViejo.xls<br>
+                VectorAnalitico24h.xls<br>
+                VectorAnaliticoMD.xls<br>
+                VectorViejo.xls<br>
+                Resumen_de_Mercado.xls
             </div>
         </div>
         <p>Una vez que hayas subido los documentos, presiona el botón "Subir y procesar".</p>
@@ -102,7 +97,5 @@
             <button type="submit">Subir y procesar</button>
         </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

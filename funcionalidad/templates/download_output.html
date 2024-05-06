@@ -34,13 +34,34 @@
         li {
             margin-bottom: 10px;
         }
-        a {
-            color: #007bff;
+        .download-button {
+            display: inline-block;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
             text-decoration: none;
-            transition: color 0.3s;
+            cursor: pointer;
+            transition: background 0.3s;
         }
-        a:hover {
-            color: #0056b3;
+        .download-button:hover {
+            background: #0056b3;
+        }
+        .back-button {
+            margin-top: 20px;
+            display: inline-block;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .back-button:hover {
+            background: #218838;
         }
         p {
             font-weight: 400;
@@ -50,14 +71,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>Gracias por la espera, estos son tus documentos procesados.</h1>
+        <h1>Gracias por la espera, aquí tienes tus documentos.</h1>
         <ul>
             {% for file in files %}
-                <li><a href="{% url 'download_file' file %}">{{ file }}</a></li>
+                <li><a class="download-button" href="{% url 'download_file' file %}">Download {{ file }}</a></li>
             {% empty %}
-                <p>No processed documents available.</p>
+                <p>No hay documentos procesados disponibles.</p>
             {% endfor %}
         </ul>
+        <a class="back-button" href="/upload/">Regresar</a>
     </div>
 </body>
 </html>

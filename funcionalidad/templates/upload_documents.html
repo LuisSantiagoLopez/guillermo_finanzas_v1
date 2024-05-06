@@ -51,11 +51,7 @@
             display: inline-block;
             cursor: pointer;
             text-decoration: underline;
-            padding: 5px;
-        }
-        .tooltip-list:hover .tooltip-content {
-            visibility: visible;
-            opacity: 1;
+            margin-bottom: 20px; /* Adjust margin as needed */
         }
         .tooltip-content {
             visibility: hidden;
@@ -68,9 +64,14 @@
             padding: 10px;
             position: absolute;
             z-index: 1;
+            top: 100%; /* Position below the trigger */
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, 5px); /* Center align horizontally and add spacing */
             transition: opacity 0.3s;
+        }
+        .tooltip-list:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
         }
     </style>
 </head>

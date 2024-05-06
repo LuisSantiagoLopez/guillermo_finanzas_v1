@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload Documents</title>
+    <title>Download Processed Documents</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -27,35 +27,59 @@
             font-weight: 700;
             margin-bottom: 20px;
         }
-        form {
-            margin-top: 20px;
+        ul {
+            list-style-type: none;
+            padding: 0;
         }
-        input[type="file"] {
-            display: block;
-            margin: 0 auto 20px;
+        li {
+            margin-bottom: 10px;
         }
-        button {
+        .download-button {
+            display: inline-block;
             background: #007bff;
             color: #fff;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
+            text-decoration: none;
             cursor: pointer;
             transition: background 0.3s;
         }
-        button:hover {
+        .download-button:hover {
             background: #0056b3;
+        }
+        .back-button {
+            margin-top: 20px;
+            display: inline-block;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .back-button:hover {
+            background: #218838;
+        }
+        p {
+            font-weight: 400;
+            color: #999;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Hola Guillermo, soy tu asistente de Excel personalizado. Sube tus documentos para empezar.</h1>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="file" name="documents" multiple required>
-            <button type="submit">Subir y procesar</button>
-        </form>
+        <h1>Gracias por la espera Guillermo, aquí están tus documentos.</h1>
+        <ul>
+            {% for file in files %}
+                <li><a class="download-button" href="{% url 'download_file' file %}">Download {{ file }}</a></li>
+            {% empty %}
+                <p>No hay documentos a procesar</p>
+            {% endfor %}
+        </ul>
+        <a class="back-button" href="/upload/">Regresar</a>
     </div>
 </body>
 </html>

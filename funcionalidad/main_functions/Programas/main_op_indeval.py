@@ -14,19 +14,21 @@ os.makedirs(excel_output_dir, exist_ok=True)
 indeval_grande = pd.read_csv(os.path.join(data_dir, "Indeval_1830.csv"))
 indeval_chico = pd.read_csv(os.path.join(data_dir, "Indeval_1415.csv"))
 
-vector = pd.read_excel("Data_a_Extraer/VectorAnalitico24h.xls")
-vector_viejo = pd.read_excel("Data_a_Extraer/VectorViejo.xls")
+vector = pd.read_excel(os.path.join(data_dir, 'VectorAnalitico24h.xls'))
+vector_viejo = pd.read_excel(os.path.join(data_dir, 'VectorViejo.xls'))
 
-pip = pd.read_excel('Data_a_Extraer/PIP.xls',skiprows=1)
-pip_viejo = pd.read_excel('Data_a_Extraer/PIPViejo.xls',skiprows=1)
+pip = pd.read_excel(os.path.join(data_dir, 'PIP.xls'), skiprows=1)
+pip_viejo = pd.read_excel(os.path.join(data_dir, 'PIPViejo.xls'), skiprows=1)
 
 hoy = datetime.today().date()
 
 fechas_grande = indeval_grande['Fecha']
 fechas_chico = indeval_chico['Fecha']
 
-fechas_grande.to_excel('Exceles/Fechas_Indeval_Grande.xlsx', index=False)
-fechas_chico.to_excel('Exceles/Fechas_Indeval_Chico.xlsx', index=False)
+fechas_grande.to_excel(os.path.join(excel_output_dir, 'Fechas_Indeval_Grande.xlsx'), index=False)
+
+fechas_chico.to_excel(os.path.join(excel_output_dir, 'Fechas_Indeval_Chico.xlsx'), index=False)
+
 
 columnas_df = ['Instrumento','Subyacente','Monto','Dias x Vencer',
                'Tasa Operacion','Sobretasa Operacion', 'Tasa T',

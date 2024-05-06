@@ -18,6 +18,9 @@ import os
 script_dir = os.path.dirname(os.path.abspath(__file__))
 main_functions_dir = os.path.dirname(script_dir)
 
+excel_output_dir = os.path.join(main_functions_dir, 'Exceles')
+image_output_dir = os.path.join(main_functions_dir, 'Imagenes')
+
 def Borrar_Columnas_NaN(df):
     
     for k in range(df.shape[0]):
@@ -70,7 +73,8 @@ def Generador_Foto(df, nombre):
     fig.tight_layout(pad=0)
     plt.tight_layout()
 
-    plt.savefig(f'Imagenes/{nombre}.png', format='png', bbox_inches='tight', dpi=300)
+    plt.savefig(os.path.join(image_output_dir, f'{nombre}.png'), format='png', bbox_inches='tight', dpi=300)
+
     plt.close(fig)
 
 def Limpiador_DF(df):
@@ -177,10 +181,7 @@ for i,b in enumerate(buscar):
         df_organizado = df_organizado.iloc[1:, :]
         df_udi_tiie = df_organizado
 
-    df_organizado.to_excel(f"Exceles/{b}.xlsx",index=False)
-    #Generador_Foto(df_organizado, b)
-
-    
+    df_organizado.to_excel(os.path.join(excel_output_dir, f"{b}.xlsx"), index=False)
 
 import PEMEX_CFE_Resumen_Mercado
 import main_writer

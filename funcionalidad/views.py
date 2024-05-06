@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -14,9 +15,9 @@ def upload_and_process_documents(request):
         for file in files:
             fs.save(file.name, file)
 
-        # Execute the Python script
+        # Execute the Python script using the interpreter of the current environment
         script_path = os.path.join(settings.FUNCIONALIDAD_DIR, 'Programas', 'main_df.py')
-        subprocess.run(['python', script_path], check=True)
+        subprocess.run([sys.executable, script_path], check=True)
 
         # Collect output files for download
         output_files = os.listdir(settings.OUTPUT_DIR)

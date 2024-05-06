@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def input_documentos(request):
+    return render(request, 'input_documentos.html')

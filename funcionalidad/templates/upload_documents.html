@@ -46,97 +46,28 @@
         button:hover {
             background: #0056b3;
         }
-        .tooltip-list {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-            text-decoration: underline;
-            margin-bottom: 20px;
-        }
-        .tooltip-content {
-            visibility: hidden;
-            opacity: 0;
-            width: 200px;
-            background-color: #333;
-            color: #fff;
-            text-align: left;
-            border-radius: 5px;
-            padding: 10px;
-            position: absolute;
-            z-index: 1;
-            top: 100%;
-            left: 50%;
-            transform: translate(-50%, 5px);
-            transition: opacity 0.3s;
-        }
-        .tooltip-list:hover .tooltip-content {
-            visibility: visible;
-            opacity: 1;
-        }
-        .error-card {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            border-radius: 5px;
-            padding: 10px;
-            display: none;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Hola Guillermo, soy tu asistente de Excel personalizado.</h1>
         <p>Por favor, sube los siguientes documentos:</p>
-        <div class="tooltip-list">
-            Lista de documentos
-            <div class="tooltip-content">
-                Indeval_1415.csv<br>
-                Indeval_1830.csv<br>
-                PIP.xls<br>
-                PIPViejo.xls<br>
-                VectorAnalitico24h.xls<br>
-                VectorAnaliticoMD.xls<br>
-                VectorViejo.xls<br>
-                Resumen_de_Mercado.xls
-            </div>
-        </div>
+        <ol>
+            <li>Indeval_1415.csv</li>
+            <li>Indeval_1830.csv</li>
+            <li>PIP.xls</li>
+            <li>PIPViejo.xls</li>
+            <li>VectorAnalitico24h.xls</li>
+            <li>VectorAnaliticoMD.xls</li>
+            <li>VectorViejo.xls</li>
+            <li>Resumen_de_Mercado.xls</li>
+        </ol>
         <p>Una vez que hayas subido los documentos, presiona el botón "Subir y procesar".</p>
-        <div class="error-card" id="error-card"></div>
-        <form id="upload-form" method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="file" name="documents" multiple required>
-            <button id="upload-button" type="submit">Subir y procesar</button>
+            <button type="submit">Subir y procesar</button>
         </form>
     </div>
-    <script>
-        const form = document.getElementById('upload-form');
-        const errorCard = document.getElementById('error-card');
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            const formData = new FormData(form);
-            fetch(form.action, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'error') {
-                    errorCard.textContent = data.message;
-                    errorCard.style.display = 'block';
-                } else {
-                    // Handle success
-                    window.location.reload();
-                }
-            })
-            .catch(error => {
-                errorCard.textContent = 'Ocurrió un error inesperado. Inténtalo de nuevo.';
-                errorCard.style.display = 'block';
-            });
-        });
-    </script>
 </body>
 </html>

@@ -10,8 +10,8 @@ os.makedirs(output_dir, exist_ok=True)
 df_grande = pd.read_excel(os.path.join(excel_dir, 'indeval_grande.xlsx'))
 df_chico = pd.read_excel(os.path.join(excel_dir, 'indeval_chico.xlsx'))
 
-df_fechas_grande = pd.read_excel('Exceles/Fechas_Indeval_Grande.xlsx')
-df_fechas_chico = pd.read_excel('Exceles/Fechas_Indeval_Chico.xlsx')
+df_fechas_grande = pd.read_excel(os.path.join(excel_dir, 'Fechas_Indeval_Grande.xlsx'))
+df_fechas_chico = pd.read_excel(os.path.join(excel_dir, 'Fechas_Indeval_Chico.xlsx'))
 
 ## OBJECTO XLSXWRITER
 writer = pd.ExcelWriter(os.path.join(output_dir, 'Styled_Indeval_Report.xlsx'), engine='xlsxwriter')

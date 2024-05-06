@@ -2,7 +2,8 @@ import os
 import subprocess
 import sys
 from django.conf import settings
-from django.shortcuts import render, HttpResponse, JsonResponse
+from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
 from django.core.files.storage import FileSystemStorage
 import glob
 

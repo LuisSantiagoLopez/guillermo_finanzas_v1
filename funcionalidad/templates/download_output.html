@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Download Processed Documents</title>
+</head>
+<body>
+    <h1>Processed Documents</h1>
+    <ul>
+        {% for file in files %}
+            <li><a href="{% url 'download_file' file %}">{{ file }}</a></li>
+        {% empty %}
+            <p>No processed documents available.</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>

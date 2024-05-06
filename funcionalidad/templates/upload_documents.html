@@ -27,7 +27,20 @@
             font-weight: 700;
             margin-bottom: 20px;
         }
-        .dropdown-menu {
+        .accordion-item {
+            border: none;
+        }
+        .accordion-button {
+            background: #007bff;
+            color: #fff;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        .accordion-button:not(.collapsed) {
+            color: #fff;
+            background: #0056b3;
+        }
+        .accordion-body {
             text-align: center;
             font-size: 0.9em;
         }
@@ -50,37 +63,31 @@
         button:hover {
             background: #0056b3;
         }
-        .dropdown-toggle {
-            background: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .dropdown-toggle:hover {
-            background: #0056b3;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Hola Guillermo, soy tu asistente de Excel personalizado.</h1>
         <p>Por favor, sube los siguientes documentos:</p>
-        <div class="dropdown">
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Lista de documentos
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item">Indeval_1415.csv</a>
-                <a class="dropdown-item">Indeval_1830.csv</a>
-                <a class="dropdown-item">PIP.xls</a>
-                <a class="dropdown-item">PIPViejo.xls</a>
-                <a class="dropdown-item">VectorAnalitico24h.xls</a>
-                <a class="dropdown-item">VectorAnaliticoMD.xls</a>
-                <a class="dropdown-item">VectorViejo.xls</a>
-                <a class="dropdown-item">Resumen_de_Mercado.xls</a>
+        <div class="accordion" id="documentsAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Lista de documentos
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#documentsAccordion">
+                    <div class="accordion-body">
+                        Indeval_1415.csv<br>
+                        Indeval_1830.csv<br>
+                        PIP.xls<br>
+                        PIPViejo.xls<br>
+                        VectorAnalitico24h.xls<br>
+                        VectorAnaliticoMD.xls<br>
+                        VectorViejo.xls<br>
+                        Resumen_de_Mercado.xls
+                    </div>
+                </div>
             </div>
         </div>
         <p>Una vez que hayas subido los documentos, presiona el botón "Subir y procesar".</p>
@@ -90,8 +97,16 @@
             <button type="submit">Subir y procesar</button>
         </form>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('collapsed');
+                const collapse = button.parentElement.nextElementSibling;
+                collapse.classList.toggle('show');
+            });
+        });
+    </script>
 </body>
 </html>

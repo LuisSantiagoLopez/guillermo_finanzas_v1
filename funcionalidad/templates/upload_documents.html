@@ -31,18 +31,23 @@
             border: none;
         }
         .accordion-button {
-            background: #007bff;
+            background: #000;
             color: #fff;
-            font-size: 0.9em;
+            font-size: 0.75em;
             text-align: center;
+            padding: 5px 10px;
+            width: fit-content;
+            margin: 0 auto 10px;
+            border-radius: 5px;
         }
         .accordion-button:not(.collapsed) {
             color: #fff;
-            background: #0056b3;
+            background: #333;
         }
         .accordion-body {
             text-align: center;
             font-size: 0.9em;
+            padding: 10px;
         }
         form {
             margin-top: 20px;
@@ -72,11 +77,11 @@
         <div class="accordion" id="documentsAccordion">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                         Lista de documentos
                     </button>
                 </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#documentsAccordion">
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#documentsAccordion">
                     <div class="accordion-body">
                         Indeval_1415.csv<br>
                         Indeval_1830.csv<br>
@@ -99,14 +104,5 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.querySelectorAll('.accordion-button').forEach(button => {
-            button.addEventListener('click', () => {
-                button.classList.toggle('collapsed');
-                const collapse = button.parentElement.nextElementSibling;
-                collapse.classList.toggle('show');
-            });
-        });
-    </script>
 </body>
 </html>

@@ -58,7 +58,7 @@ df_final_cfe.columns = columnas
 
 print(df_final_cfe)
 
-df_cfe_pip = pd.read_excel('Data_a_Extraer/PIP.xls',skiprows=1)
+df_cfe_pip = pd.read_excel(os.path.join(data_dir, 'PIP.xls'), skiprows=1)
 
 df_cfe_pip = df_cfe_pip.loc[df_cfe_pip['EMISORA'].isin(['CFE'])]
 df_cfe_pip = df_cfe_pip.loc[df_cfe_pip['TIPO VALOR'].isin(['95'])]
@@ -88,7 +88,7 @@ pemex_t_1.columns = columnas
 
 pemex_valores_v_t_1 = pemex_t_1['V ST T-1'].tolist()
 
-pemex_pip_t_1 = pd.read_excel('Data_a_Extraer/PIPViejo.xls',skiprows=1)
+pemex_pip_t_1 = pd.read_excel(os.path.join(data_dir, 'PIPViejo.xls'), skiprows=1)
 pemex_pip_t_1 = pemex_pip_t_1.loc[pemex_pip_t_1['SERIE'].isin(lista_tipo_valor)]
 pemex_pip_t_1 = pemex_pip_t_1.loc[pemex_pip_t_1['EMISORA'].isin(['PEMEX'])]
 df_pemex_pip = pemex_pip_t_1.loc[pemex_pip_t_1['TIPO VALOR'].isin(['95'])]
@@ -110,7 +110,7 @@ columnas = ['Serie','TASA','V ST T-1']
 cfe_t_1 = cfe_t_1[['SERIE','TASA CUPON', 'SOBRETASA']]
 cfe_t_1.columns = columnas
 
-cfe_pip_t_1 = pd.read_excel('Data_a_Extraer/PIPViejo.xls',skiprows=1)
+cfe_pip_t_1 = pd.read_excel(os.path.join(data_dir, 'PIPViejo.xls'), skiprows=1)
 
 cfe_pip_t_1 = cfe_pip_t_1.loc[cfe_pip_t_1['EMISORA'].isin(['CFE'])]
 cfe_pip_t_1 = cfe_pip_t_1.loc[cfe_pip_t_1['TIPO VALOR'].isin(['95'])]
@@ -122,5 +122,6 @@ df_cfe_pip.columns = ['CUPON ACTUAL','P ST T-1']
 df_final_cfe.loc[:, 'V ST T-1'] = cfe_t_1['V ST T-1'].tolist()
 df_final_cfe.loc[:, 'P ST T-1'] = df_cfe_pip['P ST T-1'].tolist()
 
-df_final_pemex.to_excel('Exceles/Pemex_Series.xlsx',index=False)
+df_final_pemex.to_excel(os.path.join(excel_output_dir, 'Pemex_Series.xlsx'), index=False)
+
 df_final_cfe.to_excel(os.path.join(excel_output_dir, 'CFE_Series.xlsx'), index=False)

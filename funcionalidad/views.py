@@ -5,9 +5,19 @@ from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.core.files.storage import FileSystemStorage
+import glob
+
+def delete_files_in_directory(directory):
+    files = glob.glob(os.path.join(directory, '*'))
+    for file in files:
+        os.remove(file)
 
 def upload_and_process_documents(request):
-    if request.method == 'POST':
+    if request.method == 'POST': 
+        delete_files_in_directory(settings.DATA_A_EXTRAER_DIR)
+        delete_files_in_directory(settings.OUTPUT_DIR)
+        delete_files_in_directory(settings.EXCELES_DIR)
+
         files = request.FILES.getlist('documents')
         fs = FileSystemStorage(location=settings.DATA_A_EXTRAER_DIR)
 

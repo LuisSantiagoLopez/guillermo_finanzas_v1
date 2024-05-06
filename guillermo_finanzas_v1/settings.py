@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 FUNCIONALIDAD_DIR = os.path.join(BASE_DIR, 'funcionalidad', 'main_functions')
 DATA_A_EXTRAER_DIR = os.path.join(FUNCIONALIDAD_DIR, 'Data_a_Extraer')
 OUTPUT_DIR = os.path.join(FUNCIONALIDAD_DIR, 'Output')
-
+EXCELES_DIR = os.path.join(FUNCIONALIDAD_DIR, 'Exceles')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/

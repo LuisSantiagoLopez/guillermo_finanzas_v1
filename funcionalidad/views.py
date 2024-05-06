@@ -5,6 +5,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.core.files.storage import FileSystemStorage
+import shutil
 import glob
 
 def delete_files_in_directory(directory):
@@ -15,7 +16,25 @@ def delete_files_in_directory(directory):
 def upload_and_process_documents(request):
     try:
         if request.method == 'POST':
-            delete_files_in_directory(settings.DATA_A_EXTRAER_DIR)
+            use_pip_checkbox = request.POST.get('use_pip_yesterday', '') == 'on'
+            use_vector_checkbox = request.POST.get('use_vector_yesterday', '') == 'on'
+
+            pip_file = os.path.join(settings.DATA_A_EXTRAER_DIR, 'PIP.xls')
+            pip_renamed_file = os.path.join(settings.DATA_A_EXTRAER_DIR, 'PipViejo.xls')
+            vector_file = os.path.join(settings.DATA_A_EXTRAER_DIR, 'VectorAnalitico24h.xls')
+            vector_renamed_file = os.path.join(settings.DATA_A_EXTRAER_DIR, 'VectorViejo.xls')
+
+            if use_pip_checkbox and os.path.exists(pip_file):
+                shutil.move(pip_file, pip_renamed_file)
+
+            if use_vector_checkbox and os.path.exists(vector_file):
+                shutil.move(vector_file, vector_renamed_file)
+
+            files = glob.glob(os.path.join(settings.DATA_A_EXTRAER_DIR, '*'))
+            for file in files:
+                if file not in [pip_renamed_file, vector_renamed_file]:
+                    os.remove(file)
+
             delete_files_in_directory(settings.OUTPUT_DIR)
             delete_files_in_directory(settings.EXCELES_DIR)
 

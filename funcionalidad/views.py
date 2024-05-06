@@ -37,7 +37,7 @@ def upload_and_process_documents(request):
         return HttpResponse(f"File not found: {fnf_error}")
 
     except subprocess.CalledProcessError as cpe_error:
-        return HttpResponse(f"Subprocess error: {cpe_error}")
+        return HttpResponse(f"Subprocess error: {cpe_error} (stdout: {cpe_error.stdout}, stderr: {cpe_error.stderr})")
 
     except Exception as generic_error:
         return HttpResponse(f"An unexpected error occurred: {generic_error}")

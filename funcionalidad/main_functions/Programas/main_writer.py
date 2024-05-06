@@ -43,7 +43,7 @@ df_CFE_series = pd.read_excel(os.path.join(excel_dir, "CFE_Series.xlsx"))
 
 # Crear un Pandas Excel writer utilizando XlsxWriter como motor
 ### CREAS OBJETO DE WRITER CON ARCHIVO DE SALIDA
-writer = pd.ExcelWriter(os.path.join(output_dir, "Resumen_Mercado_Memo.xlsx"), engine="xlsxwriter")
+writer = pd.ExcelWriter(os.path.join(output_dir, "Resumen_Mercado_Final.xlsx"), engine="xlsxwriter")
 
 # INSERTAMOS DF'S A EXCEL
 ## DÓNDE QUIERES PONER EL DF 

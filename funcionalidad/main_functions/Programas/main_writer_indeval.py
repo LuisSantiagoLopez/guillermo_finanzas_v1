@@ -14,7 +14,7 @@ df_fechas_grande = pd.read_excel(os.path.join(excel_dir, 'Fechas_Indeval_Grande.
 df_fechas_chico = pd.read_excel(os.path.join(excel_dir, 'Fechas_Indeval_Chico.xlsx'))
 
 ## OBJECTO XLSXWRITER
-writer = pd.ExcelWriter(os.path.join(output_dir, 'Styled_Indeval_Report.xlsx'), engine='xlsxwriter')
+writer = pd.ExcelWriter(os.path.join(output_dir, 'Reporte_Indeval_Final.xlsx'), engine='xlsxwriter')
 workbook = writer.book
 
 ## FORMATOS CUSTOMIZADOS PARA CADA SECCIÓN 

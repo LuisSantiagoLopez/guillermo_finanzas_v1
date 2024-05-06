@@ -73,7 +73,49 @@
             visibility: visible;
             opacity: 1;
         }
+        .toast {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            min-width: 200px;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
     </style>
+    <script>
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 5000);
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+
+            fetch(event.target.action, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'error') {
+                    showToast(data.message);
+                } else {
+                    // Handle successful upload here if needed
+                    window.location.href = '/download_output';
+                }
+            })
+            .catch(error => {
+                showToast('Ocurrió un error inesperado.');
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -93,11 +135,12 @@
             </div>
         </div>
         <p>Una vez que hayas subido los documentos, presiona el botón "Subir y procesar".</p>
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
             {% csrf_token %}
             <input type="file" name="documents" multiple required>
             <button type="submit">Subir y procesar</button>
         </form>
     </div>
+    <div id="toast" class="toast"></div>
 </body>
 </html>

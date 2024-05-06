@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 from django.conf import settings
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, JsonResponse
 from django.core.files.storage import FileSystemStorage
 import glob
 
@@ -34,13 +34,13 @@ def upload_and_process_documents(request):
             return render(request, 'download_output.html', {'files': output_files})
 
     except FileNotFoundError as fnf_error:
-        return HttpResponse(f"File not found: {fnf_error}")
+        return JsonResponse({'status': 'error', 'message': f"No se encontró un archivo: {fnf_error}"})
 
     except subprocess.CalledProcessError as cpe_error:
-        return HttpResponse(f"Subprocess error: {cpe_error} (stdout: {cpe_error.stdout}, stderr: {cpe_error.stderr})")
+        return JsonResponse({'status': 'error', 'message': "Hubo un error al correr el programa. Es probable que no hayas subido los archivos correctamente. Recuerda que los nombres de los documentos subidos deben ser exactamente iguales a los que se detallan en la lista de documentos."})
 
     except Exception as generic_error:
-        return HttpResponse(f"An unexpected error occurred: {generic_error}")
+        return JsonResponse({'status': 'error', 'message': f"Ocurrió un error inesperado: {generic_error}"})
 
     return render(request, 'upload_documents.html')
 
@@ -51,6 +51,6 @@ def download_file(request, filename):
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
         return response
     except FileNotFoundError as fnf_error:
-        return HttpResponse(f"File not found: {fnf_error}")
+        return HttpResponse(f"No se encontró el archivo final: {fnf_error}")
     except Exception as generic_error:
-        return HttpResponse(f"An unexpected error occurred: {generic_error}")
+        return HttpResponse(f"Ocurrió un error inesperado: {generic_error}")

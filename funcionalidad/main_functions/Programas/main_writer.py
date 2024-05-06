@@ -3,9 +3,14 @@ FORMATTEA RESUMEN DE MERCADO MEMO
 """
 
 import pandas as pd
-
+import os 
 from datetime import datetime
 import locale
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+excel_dir = os.path.join(os.path.dirname(script_dir), 'Exceles')
+output_dir = os.path.join(os.path.dirname(script_dir), 'Output')
+os.makedirs(output_dir, exist_ok=True)
 
 ### IMPORTAR FECHA 
 # Intenta configurar el locale a español
@@ -22,7 +27,7 @@ texto_fecha_espanol = fecha_actual.strftime("%A, %d de %B de %Y")
 
 
 # Leer los DataFrames
-df_cetes = pd.read_excel("Exceles/CETE's.xlsx")
+df_cetes = pd.read_excel(os.path.join(excel_dir, "CETE's.xlsx"))
 df_udibonos = pd.read_excel("Exceles/Tasas Reales (UDIBONO's).xlsx")
 df_basic_swap = pd.read_excel("Exceles/Basis Swap TIIE SOFR.xlsx")
 df_irs_tiie = pd.read_excel("Exceles/IRS TIIE.xlsx")
@@ -38,7 +43,7 @@ df_CFE_series = pd.read_excel("Exceles/CFE_Series.xlsx")
 
 # Crear un Pandas Excel writer utilizando XlsxWriter como motor
 ### CREAS OBJETO DE WRITER CON ARCHIVO DE SALIDA
-writer = pd.ExcelWriter("Output/Resumen_Mercado_Memo.xlsx", engine="xlsxwriter")
+writer = pd.ExcelWriter(os.path.join(output_dir, "Resumen_Mercado_Memo.xlsx"), engine="xlsxwriter")
 
 # INSERTAMOS DF'S A EXCEL
 ## DÓNDE QUIERES PONER EL DF 

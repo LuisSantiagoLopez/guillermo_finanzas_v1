@@ -1,12 +1,16 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import os
 import sys
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+data_dir = os.path.join(os.path.dirname(script_dir), 'Data_a_Extraer')
+excel_output_dir = os.path.join(os.path.dirname(script_dir), 'Exceles')
+os.makedirs(excel_output_dir, exist_ok=True)
 
-ruta_archivo = "Data_a_Extraer/VectorAnalitico24h.xls"
-ruta_archivo_viejo = "Data_a_Extraer/VectorViejo.xls"
-
+ruta_archivo = os.path.join(data_dir, 'VectorAnalitico24h.xls')
+ruta_archivo_viejo = os.path.join(data_dir, 'VectorViejo.xls')
 
 df_original = pd.read_excel(ruta_archivo)
 df_viejo = pd.read_excel(ruta_archivo_viejo)
@@ -22,7 +26,7 @@ columnas = ['Serie','TASA','ST']
 df_final_pemex = nuevo_df[['SERIE','TASA CUPON', 'SOBRETASA']]
 df_final_pemex.columns = columnas
 
-df_pemex_pip = pd.read_excel('Data_a_Extraer/PIP.xls',skiprows=1)
+df_pemex_pip = pd.read_excel(os.path.join(data_dir, 'PIP.xls'), skiprows=1)
 
 df_pemex_pip = df_pemex_pip.loc[df_pemex_pip['SERIE'].isin(lista_tipo_valor)]
 df_pemex_pip = df_pemex_pip.loc[df_pemex_pip['EMISORA'].isin(['PEMEX'])]
@@ -37,7 +41,7 @@ sobretasas_pip = df_pemex_pip['ST'].tolist()
 df_final_pemex.loc[:, 'TASA PIP'] = tasas_pip
 df_final_pemex.loc[:, 'ST PIP'] = sobretasas_pip
 
-df_final_pemex.to_excel('Exceles/Pemex_Series.xlsx',index=False)
+df_final_pemex.to_excel(os.path.join(excel_output_dir, 'Pemex_Series.xlsx'), index=False)
 
 #### EMPEZAMOS CON CFE
 
@@ -119,4 +123,4 @@ df_final_cfe.loc[:, 'V ST T-1'] = cfe_t_1['V ST T-1'].tolist()
 df_final_cfe.loc[:, 'P ST T-1'] = df_cfe_pip['P ST T-1'].tolist()
 
 df_final_pemex.to_excel('Exceles/Pemex_Series.xlsx',index=False)
-df_final_cfe.to_excel('Exceles/CFE_Series.xlsx', index = False)
+df_final_cfe.to_excel(os.path.join(excel_output_dir, 'CFE_Series.xlsx'), index=False)

@@ -1,13 +1,18 @@
 """Indeval Grande e Indeval Chico en un solo documento de Excel. El ejemplo está en REPORTE - REPORTE INDEVAL"""
 
 import pandas as pd
-
+import os
 from datetime import datetime
 import locale
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+data_dir = os.path.join(os.path.dirname(script_dir), 'Data_a_Extraer')
+excel_output_dir = os.path.join(os.path.dirname(script_dir), 'Exceles')
+os.makedirs(excel_output_dir, exist_ok=True)
+
 # Leer los DataFrames
-indeval_grande = pd.read_csv("Data_a_Extraer/Indeval_1830.csv")
-indeval_chico = pd.read_csv("Data_a_Extraer/Indeval_1415.csv")
+indeval_grande = pd.read_csv(os.path.join(data_dir, "Indeval_1830.csv"))
+indeval_chico = pd.read_csv(os.path.join(data_dir, "Indeval_1415.csv"))
 
 vector = pd.read_excel("Data_a_Extraer/VectorAnalitico24h.xls")
 vector_viejo = pd.read_excel("Data_a_Extraer/VectorViejo.xls")
@@ -92,7 +97,7 @@ for i in range(indeval_grande.shape[0]):
     ## Añadimos fila a DF
     df_final.loc[i] = fila
 
-df_final.to_excel('Exceles/indeval_grande.xlsx',index=False)
+df_final.to_excel(os.path.join(excel_output_dir, 'indeval_grande.xlsx'), index=False)
 
 df_final_chico = pd.DataFrame(columns=columnas_df)
 
@@ -156,4 +161,4 @@ for i in range(indeval_chico.shape[0]):
     ## Añadimos fila a DF
     df_final_chico.loc[i] = fila
 
-df_final_chico.to_excel('Exceles/indeval_chico.xlsx',index=False)
+df_final_chico.to_excel(os.path.join(excel_output_dir, 'indeval_chico.xlsx'), index=False)

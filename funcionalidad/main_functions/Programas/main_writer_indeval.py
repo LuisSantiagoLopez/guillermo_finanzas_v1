@@ -1,14 +1,20 @@
 import pandas as pd
+import os
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+excel_dir = os.path.join(os.path.dirname(script_dir), 'Exceles')
+output_dir = os.path.join(os.path.dirname(script_dir), 'Output')
+os.makedirs(output_dir, exist_ok=True)
 
 ## CARGAR DATOS 
-df_grande = pd.read_excel('Exceles/indeval_grande.xlsx')
-df_chico = pd.read_excel('Exceles/indeval_chico.xlsx')
+df_grande = pd.read_excel(os.path.join(excel_dir, 'indeval_grande.xlsx'))
+df_chico = pd.read_excel(os.path.join(excel_dir, 'indeval_chico.xlsx'))
 
 df_fechas_grande = pd.read_excel('Exceles/Fechas_Indeval_Grande.xlsx')
 df_fechas_chico = pd.read_excel('Exceles/Fechas_Indeval_Chico.xlsx')
 
 ## OBJECTO XLSXWRITER
-writer = pd.ExcelWriter('Output/Styled_Indeval_Report.xlsx', engine='xlsxwriter')
+writer = pd.ExcelWriter(os.path.join(output_dir, 'Styled_Indeval_Report.xlsx'), engine='xlsxwriter')
 workbook = writer.book
 
 ## FORMATOS CUSTOMIZADOS PARA CADA SECCIÓN 

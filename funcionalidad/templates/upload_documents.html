@@ -86,6 +86,33 @@
             display: none;
         }
     </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hola Guillermo, soy tu asistente de Excel personalizado.</h1>
+        <p>Por favor, sube los siguientes documentos:</p>
+        <div class="tooltip-list">
+            Lista de documentos
+            <div class="tooltip-content">
+                Indeval_1415.csv<br>
+                Indeval_1830.csv<br>
+                PIP.xls<br>
+                PIPViejo.xls<br>
+                VectorAnalitico24h.xls<br>
+                VectorAnaliticoMD.xls<br>
+                VectorViejo.xls<br>
+                Resumen_de_Mercado.xls
+            </div>
+        </div>
+        <p>Una vez que hayas subido los documentos, presiona el botón "Subir y procesar".</p>
+        <form method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
+            {% csrf_token %}
+            <input type="file" name="documents" multiple required>
+            <button type="submit">Subir y procesar</button>
+        </form>
+    </div>
+    <div id="toast" class="toast"></div>
+    
     <script>
         function showToast(message) {
             const toast = document.getElementById('toast');
@@ -116,31 +143,6 @@
             });
         }
     </script>
-</head>
-<body>
-    <div class="container">
-        <h1>Hola Guillermo, soy tu asistente de Excel personalizado.</h1>
-        <p>Por favor, sube los siguientes documentos:</p>
-        <div class="tooltip-list">
-            Lista de documentos
-            <div class="tooltip-content">
-                Indeval_1415.csv<br>
-                Indeval_1830.csv<br>
-                PIP.xls<br>
-                PIPViejo.xls<br>
-                VectorAnalitico24h.xls<br>
-                VectorAnaliticoMD.xls<br>
-                VectorViejo.xls<br>
-                Resumen_de_Mercado.xls
-            </div>
-        </div>
-        <p>Una vez que hayas subido los documentos, presiona el botón "Subir y procesar".</p>
-        <form method="POST" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
-            {% csrf_token %}
-            <input type="file" name="documents" multiple required>
-            <button type="submit">Subir y procesar</button>
-        </form>
-    </div>
-    <div id="toast" class="toast"></div>
 </body>
+
 </html>

@@ -13,7 +13,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
+import os 
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+main_functions_dir = os.path.dirname(script_dir)
 
 def Borrar_Columnas_NaN(df):
     
@@ -83,7 +86,7 @@ def Limpiador_DF(df):
     df_copy.replace({np.nan: "-"}, inplace=True)
     return df_copy
 
-ruta_archivo = "Data_a_Extraer/Resumen_de_Mercado.xls"
+ruta_archivo = os.path.join(main_functions_dir, 'Data_a_Extraer', 'Resumen_de_Mercado.xls')
 
 df_original = pd.read_excel(ruta_archivo)
 

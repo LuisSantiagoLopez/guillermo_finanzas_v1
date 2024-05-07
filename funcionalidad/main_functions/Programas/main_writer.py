@@ -7,17 +7,17 @@ import os
 from datetime import datetime
 import locale
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-excel_dir = os.path.join(os.path.dirname(script_dir), 'Exceles')
-output_dir = os.path.join(os.path.dirname(script_dir), 'Output')
-os.makedirs(output_dir, exist_ok=True)
-
 ### IMPORTAR FECHA 
 # Intenta configurar el locale a español
 try:
     locale.setlocale(locale.LC_TIME, 'es_ES')  # Para Windows usa 'spanish_Spain'
 except locale.Error:
     print("Locale español no disponible, el resultado será en el idioma predeterminado.")
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+excel_dir = os.path.join(os.path.dirname(script_dir), 'Exceles')
+output_dir = os.path.join(os.path.dirname(script_dir), 'Output')
+os.makedirs(output_dir, exist_ok=True)
 
 # Obtener la fecha actual
 fecha_actual = datetime.now()
@@ -27,39 +27,40 @@ texto_fecha_espanol = fecha_actual.strftime("%A, %d de %B de %Y")
 
 
 # Leer los DataFrames
-df_cetes = pd.read_excel(os.path.join(excel_dir, "CETE's.xlsx"))
-df_udibonos = pd.read_excel(os.path.join(excel_dir, "Tasas Reales (UDIBONO's).xlsx"))
-df_basic_swap = pd.read_excel(os.path.join(excel_dir, "Basis Swap TIIE SOFR.xlsx"))
-df_irs_tiie = pd.read_excel(os.path.join(excel_dir, "IRS TIIE.xlsx"))
-df_bonos_m = pd.read_excel(os.path.join(excel_dir, "Bonos de Tasa Fija (BONOS M).xlsx"))
-df_tipo_de_cambio = pd.read_excel(os.path.join(excel_dir, "Tipos de Cambio.xlsx"))
-df_cbics = pd.read_excel(os.path.join(excel_dir, "Tasas Reales (CBIC's).xlsx"))
-df_tiie_banxico = pd.read_excel(os.path.join(excel_dir, "TIIE Banxico.xlsx"))
-df_fondeo = pd.read_excel(os.path.join(excel_dir, "Tasa de Fondeo (Banxico) Jornada del 20240401.xlsx"))
-df_puntos_forward = pd.read_excel(os.path.join(excel_dir, "Puntos Forward.xlsx"))
-df_udi_tiie = pd.read_excel(os.path.join(excel_dir, "UDI-TIIE.xlsx"))
-df_PEMEX_series = pd.read_excel(os.path.join(excel_dir, "Pemex_Series.xlsx"))
-df_CFE_series = pd.read_excel(os.path.join(excel_dir, "CFE_Series.xlsx"))
+df_cetes = pd.read_excel("CETE's.xlsx")
+df_udibonos = pd.read_excel("Tasas Reales (UDIBONO's).xlsx")
+df_basic_swap = pd.read_excel("Basis Swap TIIE SOFR.xlsx")
+df_irs_tiie = pd.read_excel("IRS TIIE.xlsx")
+df_bonos_m = pd.read_excel("Bonos de Tasa Fija (BONOS M).xlsx")
+df_tipo_de_cambio = pd.read_excel("Tipos de Cambio.xlsx")
+df_cbics = pd.read_excel("Tasas Reales (CBIC's).xlsx")
+df_tiie_banxico = pd.read_excel("Tasa de Banxico.xlsx")
+df_puntos_forward = pd.read_excel("Puntos Forward.xlsx")
+df_udi_tiie = pd.read_excel("UDI-TIIE.xlsx")
+df_PEMEX_series = pd.read_excel("Pemex_Series.xlsx")
+df_CFE_series = pd.read_excel("CFE_Series.xlsx")
 
 # Crear un Pandas Excel writer utilizando XlsxWriter como motor
 ### CREAS OBJETO DE WRITER CON ARCHIVO DE SALIDA
 writer = pd.ExcelWriter(os.path.join(output_dir, "Resumen_Mercado_Final.xlsx"), engine="xlsxwriter")
 
 # INSERTAMOS DF'S A EXCEL
-## DÓNDE QUIERES PONER EL DF 
+## PRIMERA FILA DE DFS EN DOCUMENTO
 df_cetes.to_excel(writer, sheet_name="Sheet1", startcol=1, startrow=4, index=False,header=False,)
 df_udibonos.to_excel(writer, sheet_name="Sheet1", startcol=7, startrow=4, index=False, header=False)
 df_irs_tiie.to_excel(writer, sheet_name="Sheet1", startcol=14, startrow=4, index=False,header=False)
-df_bonos_m.to_excel(writer, sheet_name="Sheet1", startcol=1, startrow=int(df_cetes.shape[0]+6), index=False,header=False)
-df_tipo_de_cambio.to_excel(writer, sheet_name="Sheet1", startcol=7, startrow=int(df_udibonos.shape[0]+5), index=False,header=False)
-df_basic_swap.to_excel(writer, sheet_name="Sheet1", startcol=14, startrow=int(df_irs_tiie.shape[0]+6), index=False,header=False)
-df_cbics.to_excel(writer, sheet_name="Sheet1", startcol=1, startrow=int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+3), index=False,header=False)
-df_tiie_banxico.to_excel(writer, sheet_name="Sheet1", startcol=1, startrow=int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+3)+int(df_cbics.shape[0]+2), index=False,header=False)
-df_fondeo.to_excel(writer, sheet_name="Sheet1", startcol=7, startrow=int(df_udibonos.shape[0]+5)+int(df_tipo_de_cambio.shape[0]+1), index=False,header=False)
-df_puntos_forward.to_excel(writer, sheet_name="Sheet1", startcol=7, startrow=int(df_udibonos.shape[0]+5)+int(df_tipo_de_cambio.shape[0]+1)+int(df_fondeo.shape[0]+1), index=False,header=False)
-df_udi_tiie.to_excel(writer, sheet_name="Sheet1", startcol=14, startrow=int(df_irs_tiie.shape[0]+6)+int(df_basic_swap.shape[0]), index=False,header=False)
 df_PEMEX_series.to_excel(writer, sheet_name="Sheet1", startcol=21, startrow=6, index=False,header=False)
+
+## SEGUNDA FILA DE DFS EN DOCUMENTO
+df_bonos_m.to_excel(writer, sheet_name="Sheet1", startcol=1, startrow=int(df_cetes.shape[0]+6), index=False,header=False)
+df_tipo_de_cambio.to_excel(writer, sheet_name="Sheet1", startcol=8, startrow=int(df_udibonos.shape[0]+7), index=False,header=False)
+df_basic_swap.to_excel(writer, sheet_name="Sheet1", startcol=14, startrow=int(df_irs_tiie.shape[0]+6), index=False,header=False)
 df_CFE_series.to_excel(writer, sheet_name="Sheet1", startcol=21, startrow=df_PEMEX_series.shape[0]+10, index=False,header=False)
+
+## TERCERA FILA DE DFS EN DOCUMENTO
+df_cbics.to_excel(writer, sheet_name="Sheet1", startcol=1, startrow=int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+3), index=False,header=False)
+#df_puntos_forward.to_excel(writer, sheet_name="Sheet1", startcol=7, startrow=int(df_udibonos.shape[0]+5)+int(df_tipo_de_cambio.shape[0]+2), index=False,header=False)
+df_udi_tiie.to_excel(writer, sheet_name="Sheet1", startcol=14, startrow=int(df_irs_tiie.shape[0]+6)+int(df_basic_swap.shape[0]), index=False,header=False)
 
 # Obtener el objeto workbook y la hoja de trabajo
 workbook = writer.book
@@ -93,23 +94,6 @@ def adjust_column_width(worksheet, dataframe, startcol, header_format):
         # Ajustar el ancho de la columna
         worksheet.set_column(col_num, col_num, column_width, header_format)
 
-#FORMATO BLANCO 
-# Aplicar el formato a toda la hoja
-worksheet.set_column('A:AG', None, cell_format)  # Aplica el formato desde la columna A hasta la Z
-
-### AJUSTAMOS ANCHO DE COLUMNAS
-adjust_column_width(worksheet, df_cetes, 1, cell_format)
-adjust_column_width(worksheet, df_udibonos, 7, cell_format)
-adjust_column_width(worksheet, df_irs_tiie, 14, cell_format)
-adjust_column_width(worksheet, df_bonos_m, 1, cell_format)  # Asegúrate de ajustar las posiciones correctamente
-adjust_column_width(worksheet, df_tipo_de_cambio, 7, cell_format)  # Asegúrate de ajustar las posiciones correctamente
-adjust_column_width(worksheet, df_basic_swap, 14, cell_format)  # Asegúrate de ajustar las posiciones correctamente
-adjust_column_width(worksheet, df_cbics, 1, cell_format)  # Asegúrate de ajustar las posiciones correctamente
-adjust_column_width(worksheet, df_tiie_banxico, 1, cell_format)  # Asegúrate de ajustar las posiciones correctamente
-adjust_column_width(worksheet, df_tipo_de_cambio, 7, cell_format)  # Asegúrate de ajustar las posiciones correctamente
-adjust_column_width(worksheet, df_fondeo, 7, cell_format)  # Asegúrate de ajustar las posiciones correctamente
-adjust_column_width(worksheet, df_puntos_forward, 7, cell_format)  # Asegúrate de ajustar las posiciones correctamente
-
 # Función para aplicar formato de centrado a las celdas de los DataFrames
 def apply_center_format(dataframe, worksheet, startrow, startcol, center_format):
     endrow = startrow + len(dataframe)
@@ -120,22 +104,32 @@ def apply_center_format(dataframe, worksheet, startrow, startcol, center_format)
             # Aplicar el formato de centrado
             worksheet.write(row, col, dataframe.iloc[row-startrow, col-startcol], center_format)
 
+#FORMATO BLANCO 
+# Aplicar el formato a toda la hoja
+worksheet.set_column('A:AG', None, cell_format)  # Aplica el formato desde la columna A hasta la Z
+
+adjust_column_width(worksheet, df_cetes, 1, cell_format)
+adjust_column_width(worksheet, df_udibonos, 7, cell_format)
+adjust_column_width(worksheet, df_bonos_m, 1, cell_format)  # Asegúrate de ajustar las posiciones correctamente
+adjust_column_width(worksheet, df_tipo_de_cambio, 8, cell_format)  # Asegúrate de ajustar las posiciones correctamente
+adjust_column_width(worksheet, df_basic_swap, 14, cell_format)  # Asegúrate de ajustar las posiciones correctamente
+adjust_column_width(worksheet, df_cbics, 1, cell_format)  # Asegúrate de ajustar las posiciones correctamente
+adjust_column_width(worksheet, df_tiie_banxico, 1, cell_format)  # Asegúrate de ajustar las posiciones correctamente
+adjust_column_width(worksheet, df_puntos_forward, 7, cell_format)  # Asegúrate de ajustar las posiciones correctamente
 
 # Aplicar el formato de centrado a las celdas de cada DataFrame insertado
 apply_center_format(df_cetes, worksheet, 4, 1, center_format)
 apply_center_format(df_udibonos, worksheet, 4, 7, center_format)
 apply_center_format(df_irs_tiie, worksheet, 4, 14, center_format)
 apply_center_format(df_bonos_m, worksheet, int(df_cetes.shape[0]+6), 1, center_format)
-apply_center_format(df_tipo_de_cambio, worksheet, int(df_udibonos.shape[0]+5), 7, center_format)
+apply_center_format(df_tipo_de_cambio, worksheet, int(df_udibonos.shape[0]+5), 8, center_format)
 apply_center_format(df_basic_swap, worksheet, int(df_irs_tiie.shape[0]+6), 14, center_format)
 apply_center_format(df_cbics, worksheet, int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+3), 1, center_format)
 apply_center_format(df_tiie_banxico, worksheet, int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+3)+int(df_cbics.shape[0]+2), 1, center_format)
-apply_center_format(df_fondeo, worksheet, int(df_udibonos.shape[0]+5)+int(df_tipo_de_cambio.shape[0]+1), 7, center_format)
-apply_center_format(df_puntos_forward, worksheet, int(df_udibonos.shape[0]+5)+int(df_tipo_de_cambio.shape[0]+1)+int(df_fondeo.shape[0]+1), 7, center_format)
+apply_center_format(df_puntos_forward, worksheet, int(df_udibonos.shape[0]+5)+int(df_tipo_de_cambio.shape[0]+1), 7, center_format)
 apply_center_format(df_udi_tiie, worksheet, int(df_irs_tiie.shape[0]+6)+int(df_irs_tiie.shape[0]+1), 14, center_format)
 apply_center_format(df_PEMEX_series, worksheet, 6, 21, center_format)
 apply_center_format(df_CFE_series, worksheet, df_PEMEX_series.shape[0]+10, 21, center_format)
-
 
 ### ESTILOS ENCABEZADOS NEGROS 
 header_format = workbook.add_format({
@@ -169,19 +163,35 @@ SUB_TEXTOS = workbook.add_format({
     'font_size': 12
 })
 
- 
 
-# JUNTAMOS COLUMNAS PARA CIERTOS DF'S. PARA LAS QUE TIENEN QUE SER 2 COLUMNAS
-valores_columna_L = df_udibonos['Ptos.'].values 
-for row in range(4, 14):  
-    valor = valores_columna_L[row-4]  
-    worksheet.merge_range(row, 11, row, 12, valor, center_format)
+ # JUNTAMOS COLUMNAS PARA CIERTOS DF'S. PARA LAS QUE TIENEN QUE SER 2 COLUMNAS
+valores_tiie_banxico = df_tiie_banxico['Dif BPS'].values  
 
-valores_tiie_banxico = df_tiie_banxico['Dif.'].values  
-for row in range(40,43): 
+for i in range(len(valores_tiie_banxico) + 1):  # Extender el bucle para incluir una fila adicional
+    if i < len(valores_tiie_banxico):
+        valor = valores_tiie_banxico[i]
+    else:
+        valor = valores_tiie_banxico[-1]  # Usar el último valor para la fila adicional
+    row = 40 + i
     worksheet.merge_range(row, 4, row, 5, valor, center_format)
 
-# # AGREGAMOS ENCABEZADOS DE CADA TABLA AL WORKSHEET 
+# Reemplaza `valores_tipo_de_cambio` con los valores de tu DataFrame
+valores_tipo_de_cambio = df_tipo_de_cambio['Divisa'].values  
+# Iterar sobre el rango de valores, con cuidado de no solapar combinaciones
+for i in range(len(valores_tipo_de_cambio)-1):  
+    valor = valores_tipo_de_cambio[i]
+    row = 15 + i
+    worksheet.merge_range(row, 7, row, 8, valor, center_format)  # "H" = columna 7, "I" = columna 8
+
+# Reemplaza `valores_tipo_de_cambio` con los valores de tu DataFrame
+valores_tipo_de_cambio_var = df_tipo_de_cambio['Var %'].values  
+# Iterar sobre el rango de valores, con cuidado de no solapar combinaciones
+for i in range(len(valores_tipo_de_cambio_var)-1):  
+    valor = valores_tipo_de_cambio_var[i]
+    row = 15 + i
+    worksheet.merge_range(row, 11, row, 12, valor, center_format)  # "H" = columna 7, "I" = columna 8
+
+## AGREGAMOS ENCABEZADOS DE CADA TABLA AL WORKSHEET 
 worksheet.merge_range(2, 1, 0, 5, "RESUMEN DE CIERRE DE MERCADO", TEXTOS)
 worksheet.merge_range(2, 7, 0, 12, f"{texto_fecha_espanol}", TEXTOS)
 worksheet.merge_range(3, 1, 3, 5, "CETES", SUB_TEXTOS)
@@ -207,8 +217,7 @@ worksheet.merge_range(df_PEMEX_series.shape[0]+8, 26, df_PEMEX_series.shape[0]+8
 
 worksheet.merge_range(int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+1), 1, int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+1), 5, "CBIC'S", SUB_TEXTOS)
 worksheet.merge_range(int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+7), 1, int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+7), 5, "TIIE BANXICO", SUB_TEXTOS)
-worksheet.merge_range(int(df_udibonos.shape[0]+4)+int(df_tipo_de_cambio.shape[0]), 7, int(df_udibonos.shape[0]+4)+int(df_tipo_de_cambio.shape[0]), 12, "FONDEO", SUB_TEXTOS)
-worksheet.merge_range(int(df_udibonos.shape[0]+4)+int(df_tipo_de_cambio.shape[0])+int(df_fondeo.shape[0]+1), 7, int(df_udibonos.shape[0]+4)+int(df_tipo_de_cambio.shape[0])+int(df_fondeo.shape[0]+1), 12, "PUNTOS FORWARD", SUB_TEXTOS)
+worksheet.merge_range(int(df_udibonos.shape[0]+4)+int(df_tipo_de_cambio.shape[0]), 7, int(df_udibonos.shape[0]+4)+int(df_tipo_de_cambio.shape[0]), 12, "PUNTOS FORWARD", SUB_TEXTOS)
 worksheet.merge_range(int(df_irs_tiie.shape[0]+4)+int(df_irs_tiie.shape[0]+1), 14, int(df_irs_tiie.shape[0]+4)+int(df_irs_tiie.shape[0]+1), 19, "UDI-TIIE", SUB_TEXTOS)
 
 # NÚMEROS ROJOS 
@@ -220,7 +229,7 @@ for letra in lista_columnas_condicional:
                                             'criteria': '<',
                                             'value': 0,
                                             'format': formato_negativo})
-
+    
 #PARA CADA TABLA APLICAR FORMATO DE ENCABEZADO NEGRO Y BOLD 
 # Aplicar el formato de encabezado a los encabezados de cada DataFrame
 for col_num, value in enumerate(df_cetes.columns.values):
@@ -239,17 +248,23 @@ for col_num, value in enumerate(df_cbics.columns.values):
     worksheet.write(int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+2), col_num + 1, value, header_format)
 for col_num, value in enumerate(df_tiie_banxico.columns.values):
     worksheet.write(int(df_cetes.shape[0]+6)+int(df_bonos_m.shape[0]+3)+int(df_cbics.shape[0]+1), col_num + 1, value, header_format)
-for col_num, value in enumerate(df_tipo_de_cambio.columns.values):
-    worksheet.write(int(df_udibonos.shape[0]+5)+int(df_tipo_de_cambio.shape[0]), col_num + 7, value, header_format)
-for col_num, value in enumerate(df_tipo_de_cambio.columns.values):
-    worksheet.write(int(df_udibonos.shape[0]+5)+int(df_tipo_de_cambio.shape[0])+int(df_fondeo.shape[0]+1), col_num + 7, value, header_format)
 for col_num, value in enumerate(df_udi_tiie.columns.values):
     worksheet.write(int(df_irs_tiie.shape[0]+5)+int(df_irs_tiie.shape[0]+1), col_num + 14, value, header_format)
 for col_num, value in enumerate(df_PEMEX_series.columns.values):
     worksheet.write(5, col_num + 21, value, header_format)
 for col_num, value in enumerate(df_CFE_series.columns.values):
     worksheet.write(df_PEMEX_series.shape[0]+9, col_num + 21, value, header_format)
+for col_num, value in enumerate(df_puntos_forward.columns.values):
+    worksheet.write(df_udibonos.shape[0]+df_tipo_de_cambio.shape[0]+5, col_num + 7, value, header_format)
 
+valor = df_tipo_de_cambio.columns.values[1:3]
+
+for col_num, value in enumerate(df_tipo_de_cambio.columns.values):
+    worksheet.write(int(df_udibonos.shape[0]+5), col_num + 8, value, header_format)
+
+
+#for col_num, value in enumerate(df_irs_tiie.columns.values):
+  # worksheet.write(4, col_num + 14, value, header_format)
 
 # HACEMOS COLUMNAS MAS PEQUEÑAS Y LAS PINTAMOS
 white_fill_format = workbook.add_format({'bg_color': '#FFFFFF'})

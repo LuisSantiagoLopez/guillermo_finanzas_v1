@@ -20,7 +20,7 @@ def upload_and_process_documents(request):
             use_vector_checkbox = request.POST.get('use_vector_yesterday', '') == 'on'
 
             pip_file = os.path.join(settings.DATA_A_EXTRAER_DIR, 'PIP.xls')
-            pip_renamed_file = os.path.join(settings.DATA_A_EXTRAER_DIR, 'PipViejo.xls')
+            pip_renamed_file = os.path.join(settings.DATA_A_EXTRAER_DIR, 'PIPViejo.xls')
             vector_file = os.path.join(settings.DATA_A_EXTRAER_DIR, 'VectorAnalitico24h.xls')
             vector_renamed_file = os.path.join(settings.DATA_A_EXTRAER_DIR, 'VectorViejo.xls')
 

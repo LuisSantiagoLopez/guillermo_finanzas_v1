@@ -57,7 +57,7 @@ def upload_and_process_documents(request):
         return JsonResponse({'status': 'error', 'message': f"No se encontró un archivo: {fnf_error}"})
 
     except subprocess.CalledProcessError as cpe_error:
-        return JsonResponse({'status': 'error', 'message': "Hubo un error al correr el programa. Es probable que no hayas subido los archivos correctamente. Recuerda que los nombres de los documentos subidos deben ser exactamente iguales a los que se detallan en la lista de documentos."})
+        return JsonResponse({'status': 'error', 'message': f"Ocurrió un error al ejecutar el script de Python. Revisa la consola para más información. Error: {cpe_error}"})
 
     except Exception as generic_error:
         return JsonResponse({'status': 'error', 'message': f"Ocurrió un error inesperado: {generic_error}"})

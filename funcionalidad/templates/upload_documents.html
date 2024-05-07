@@ -98,22 +98,19 @@
             {% csrf_token %}
             <input type="file" name="documents" multiple required>
 
-            <!-- Checkbox for using PIP from yesterday -->
             <div class="form-check my-3">
                 <input type="checkbox" name="use_pip_yesterday" class="form-check-input" id="pip-checkbox" checked>
-                <label class="form-check-label" for="pip-checkbox">Usar PIP de ayer como PIP viejo de hoy</label>
+                <label class="form-check-label" for="pip-checkbox">Usar PIP de ayer</label>
             </div>
 
-            <!-- Checkbox for using VectorAnalitico24h from yesterday -->
             <div class="form-check mb-3">
                 <input type="checkbox" name="use_vector_yesterday" class="form-check-input" id="vector-checkbox" checked>
-                <label class="form-check-label" for="vector-checkbox">Usar Vector Analítico de 24h de ayer como Vector Analítico Viejo de hoy</label>
+                <label class="form-check-label" for="vector-checkbox">Usar Vector Analítico de 24h de ayer</label>
             </div>
 
             <button type="submit">Subir y procesar</button>
         </form>
 
-        </form>
     </div>
 </body>
 </html>

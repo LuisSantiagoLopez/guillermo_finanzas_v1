@@ -60,7 +60,7 @@ df_final_cfe.columns = columnas
 
 print(df_final_cfe)
 
-df_cfe_pip = pd.read_excel(os.path.join(data_dir, 'PIP.xls'))
+df_cfe_pip = pd.read_excel('Data_a_Extraer/PIP.xls',skiprows=1)
 
 df_cfe_pip = df_cfe_pip.loc[df_cfe_pip['EMISORA'].isin(['CFE'])]
 df_cfe_pip = df_cfe_pip.loc[df_cfe_pip['TIPO VALOR'].isin(['95'])]
@@ -113,7 +113,7 @@ cfe_t_1 = cfe_t_1[['SERIE','TASA CUPON', 'SOBRETASA']]
 cfe_t_1.columns = columnas
 
 
-cfe_pip_t_1 = pd.read_excel(os.path.join(data_dir, 'PIPViejo.xls'))
+cfe_pip_t_1 = pd.read_excel('Data_a_Extraer/PIPViejo.xls',skiprows=1)
 
 cfe_pip_t_1 = cfe_pip_t_1.loc[cfe_pip_t_1['EMISORA'].isin(['CFE'])]
 cfe_pip_t_1 = cfe_pip_t_1.loc[cfe_pip_t_1['TIPO VALOR'].isin(['95'])]

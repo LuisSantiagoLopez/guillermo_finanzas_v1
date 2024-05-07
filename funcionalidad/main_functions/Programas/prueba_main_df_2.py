@@ -14,13 +14,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
-import os
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-main_functions_dir = os.path.dirname(script_dir)
-
-excel_output_dir = os.path.join(main_functions_dir, 'Exceles')
-image_output_dir = os.path.join(main_functions_dir, 'Imagenes')
 
 def Borrar_Columnas_NaN(df):
     
@@ -39,6 +33,44 @@ def Borrar_Columnas_NaN(df):
     
     return df
 
+def Generador_Foto(df, nombre):
+    fig, ax = plt.subplots(figsize=(5, 6))
+    tabla = plt.table(cellText=df.values,
+                      colLabels=df.columns,
+                      cellLoc='center',
+                      loc='center',
+                      bbox=None)  # No modificar el tamaño de las celdas
+    
+    tabla.auto_set_font_size(False)
+    # Ajustar automáticamente el ancho de las columnas
+    tabla.auto_set_column_width(col=list(range(len(df.columns))))
+    tabla.set_fontsize(14)
+    tabla.scale(1, 2)
+    
+    # Establecer la primera fila en negrita y con fondo azul
+    for j, label in enumerate(df.columns):
+        cell = tabla.get_celld()[(0, j)]
+        cell.set_text_props(weight='bold')
+        cell.set_facecolor("#4682B4")  # Azul claro
+    
+    # Establecer los colores de fondo alternados para las filas
+    for i in range(1, len(df) + 1):
+        if i % 2 != 0:
+            color = 'lightgray'  # Fila gris claro
+        else:
+            color = 'white'  # Fila blanca
+        for j, label in enumerate(df.columns):
+            cell = tabla.get_celld()[(i, j)]
+            cell.set_facecolor(color)
+    
+    ax.axis('off')
+    ax.set_title(nombre, loc='center', size=16, fontweight='bold')  # Ajustar posición, tamaño y estilo del título
+    fig.tight_layout(pad=0)
+    plt.tight_layout()
+
+    plt.savefig(f'Imagenes/{nombre}.png', format='png', bbox_inches='tight', dpi=300)
+    plt.close(fig)
+
 def Limpiador_DF(df):
     lista = df.iloc[0].tolist()
     df_copy = df.copy()
@@ -53,9 +85,13 @@ def Limpiador_DF(df):
     return df_copy
 
 
-ruta_archivo = os.path.join(main_functions_dir, 'Data_a_Extraer', 'Resumen_de_Mercado.xls')
+ruta_archivo = "/Users/jpnarchi/Desktop/MEMO 3/Data_a_Extraer/Resumen_de_Mercado.xls"
 
 df_original = pd.read_excel(ruta_archivo)
+
+### Establecemos variables
+buscar = ["CETE's",'Bonos de Tasa Fija (BONOS M)',"Tipos de Cambio","IRS TIIE","Tasa de Banxico",
+          "Basis Swap TIIE SOFR","Reportos Gubernamentales","TIIE Banxico","Puntos Forward","Tasas Reales (UDIBONO's)","Tasas Reales (CBIC's)","UDI-TIIE"]
 
 buscar2 = ["Tipos de Cambio","Tasa de Banxico","CETE's","Tasas Reales (UDIBONO's)","Tasas Reales (CBIC's)","Bonos de Tasa Fija (BONOS M)",
            "IRS TIIE","UDI-TIIE","Puntos Forward","Basis Swap TIIE SOFR"]
@@ -140,11 +176,11 @@ for i,b in enumerate(buscar2):
     elif b == buscar2[9]:     
         df_basic_swap = df_organizado    
 
-    df_organizado.to_excel(os.path.join(excel_output_dir, f"{b}.xlsx"), index=False)
+    df_organizado.to_excel(f"Exceles/{b}.xlsx",index=False)
     #Generador_Foto(df_organizado, b)
 
-print("Empezando")
+    
 import PEMEX_CFE_Resumen_Mercado
-import main_writer
+import main_writer_PRUEBA
 import main_op_indeval
 import main_writer_indeval

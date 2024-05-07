@@ -3,7 +3,7 @@ FORMATTEA RESUMEN DE MERCADO MEMO
 """
 
 import pandas as pd
-import os 
+
 from datetime import datetime
 import locale
 
@@ -14,11 +14,6 @@ try:
 except locale.Error:
     print("Locale español no disponible, el resultado será en el idioma predeterminado.")
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-excel_dir = os.path.join(os.path.dirname(script_dir), 'Exceles')
-output_dir = os.path.join(os.path.dirname(script_dir), 'Output')
-os.makedirs(output_dir, exist_ok=True)
-
 # Obtener la fecha actual
 fecha_actual = datetime.now()
 
@@ -27,22 +22,22 @@ texto_fecha_espanol = fecha_actual.strftime("%A, %d de %B de %Y")
 
 
 # Leer los DataFrames
-df_cetes = pd.read_excel(f"{excel_dir}/CETE's.xlsx")
-df_udibonos = pd.read_excel(f"{excel_dir}/Tasas Reales (UDIBONO's).xlsx")
-df_basic_swap = pd.read_excel(f"{excel_dir}/Basis Swap TIIE SOFR.xlsx")
-df_irs_tiie = pd.read_excel(f"{excel_dir}/IRS TIIE.xlsx")
-df_bonos_m = pd.read_excel(f"{excel_dir}/Bonos de Tasa Fija (BONOS M).xlsx")
-df_tipo_de_cambio = pd.read_excel(f"{excel_dir}/Tipos de Cambio.xlsx")
-df_cbics = pd.read_excel(f"{excel_dir}/Tasas Reales (CBIC's).xlsx")
-df_tiie_banxico = pd.read_excel(f"{excel_dir}/Tasa de Banxico.xlsx")
-df_puntos_forward = pd.read_excel(f"{excel_dir}/Puntos Forward.xlsx")
-df_udi_tiie = pd.read_excel(f"{excel_dir}/UDI-TIIE.xlsx")
-df_PEMEX_series = pd.read_excel(f"{excel_dir}/Pemex_Series.xlsx")
-df_CFE_series = pd.read_excel(f"{excel_dir}/CFE_Series.xlsx")
+df_cetes = pd.read_excel("Exceles/CETE's.xlsx")
+df_udibonos = pd.read_excel("Exceles/Tasas Reales (UDIBONO's).xlsx")
+df_basic_swap = pd.read_excel("Exceles/Basis Swap TIIE SOFR.xlsx")
+df_irs_tiie = pd.read_excel("Exceles/IRS TIIE.xlsx")
+df_bonos_m = pd.read_excel("Exceles/Bonos de Tasa Fija (BONOS M).xlsx")
+df_tipo_de_cambio = pd.read_excel("Exceles/Tipos de Cambio.xlsx")
+df_cbics = pd.read_excel("Exceles/Tasas Reales (CBIC's).xlsx")
+df_tiie_banxico = pd.read_excel("Exceles/Tasa de Banxico.xlsx")
+df_puntos_forward = pd.read_excel("Exceles/Puntos Forward.xlsx")
+df_udi_tiie = pd.read_excel("Exceles/UDI-TIIE.xlsx")
+df_PEMEX_series = pd.read_excel("Exceles/Pemex_Series.xlsx")
+df_CFE_series = pd.read_excel("Exceles/CFE_Series.xlsx")
 
 # Crear un Pandas Excel writer utilizando XlsxWriter como motor
 ### CREAS OBJETO DE WRITER CON ARCHIVO DE SALIDA
-writer = pd.ExcelWriter(os.path.join(output_dir, "Resumen_Mercado_Final.xlsx"), engine="xlsxwriter")
+writer = pd.ExcelWriter("Resumen_Mercado_Memo.xlsx", engine="xlsxwriter")
 
 # INSERTAMOS DF'S A EXCEL
 ## PRIMERA FILA DE DFS EN DOCUMENTO

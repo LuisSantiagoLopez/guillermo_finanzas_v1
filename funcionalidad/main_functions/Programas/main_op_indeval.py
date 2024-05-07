@@ -55,8 +55,13 @@ for i in range(indeval_grande.shape[0]):
     ## EXTREAMOS DATOS DE PIP VIEJO
     emisora_pip_viejo = pip_viejo[pip_viejo['EMISORA'] == emisora]
     reducir_por_serie_pip_viejo = emisora_pip_viejo[emisora_pip_viejo['SERIE'] == serie]
-    tasa_T_pip_viejo = reducir_por_serie_pip_viejo['TASA DE RENDIMIENTO'].iloc[0]
-    sobretasa_T_pip_viejo = reducir_por_serie_pip_viejo['SOBRETASA'].iloc[0]
+
+    try:
+        tasa_T_pip_viejo = reducir_por_serie_pip_viejo['TASA DE RENDIMIENTO'].iloc[0]
+        sobretasa_T_pip_viejo = reducir_por_serie_pip_viejo['SOBRETASA'].iloc[0]
+    except:
+        tasa_T_pip_viejo = "-"
+        sobretasa_T_pip_viejo = "-"
     
     ## EXTREAMOS DATOS DE VECTOR DIARIO
     emisora_vector = vector[vector['EMISORA'] == emisora]
@@ -121,8 +126,13 @@ for i in range(indeval_chico.shape[0]):
     ## EXTREAMOS DATOS DE PIP VIEJO
     emisora_pip_viejo = pip_viejo[pip_viejo['EMISORA'] == emisora]
     reducir_por_serie_pip_viejo = emisora_pip_viejo[emisora_pip_viejo['SERIE'] == serie]
-    tasa_T_pip_viejo = reducir_por_serie_pip_viejo['TASA DE RENDIMIENTO'].iloc[0]
-    sobretasa_T_pip_viejo = reducir_por_serie_pip_viejo['SOBRETASA'].iloc[0]
+    
+    try:
+        tasa_T_pip_viejo = reducir_por_serie_pip_viejo['TASA DE RENDIMIENTO'].iloc[0]
+        sobretasa_T_pip_viejo = reducir_por_serie_pip_viejo['SOBRETASA'].iloc[0]
+    except:
+        tasa_T_pip_viejo = "-"
+        sobretasa_T_pip_viejo = "-"
     
     ## EXTREAMOS DATOS DE VECTOR DIARIO
     emisora_vector = vector[vector['EMISORA'] == emisora]

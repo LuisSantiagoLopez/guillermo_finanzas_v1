@@ -78,7 +78,7 @@ df_final_cfe.loc[:, 'ST PIP'] = sobretasas_pip_cfe
 #### EMPEZAMOS CON PEMEX T-1 ####################################
 #################################################################
 
-pemex_t_1 = df_original.loc[df_viejo['SERIE'].isin(lista_tipo_valor)]
+df_viejo.loc[df_viejo['SERIE'].isin(lista_tipo_valor)]
 pemex_t_1 = pemex_t_1.loc[pemex_t_1['EMISORA'].isin(['PEMEX'])]
 pemex_t_1 = pemex_t_1.loc[pemex_t_1['TIPO VALOR'].isin(['95'])]
 

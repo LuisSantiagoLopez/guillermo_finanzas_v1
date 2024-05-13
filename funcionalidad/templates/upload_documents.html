@@ -96,15 +96,6 @@
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="file" name="documents" multiple required>
-
-            <div class="form-check my-3">
-                <input type="checkbox" name="use_pip_yesterday" class="form-check-input" id="pip-checkbox" checked>
-                <label class="form-check-label" for="pip-checkbox">Usar PIP de ayer</label>
-            </div>
-
-            <div class="form-check mb-3">
-                <input type="checkbox" name="use_vector_yesterday" class="form-check-input" id="vector-checkbox" checked>
-                <label class="form-check-label" for="vector-checkbox">Usar Vector Analítico de 24h de ayer</label>
             </div>
 
             <button type="submit">Subir y procesar</button>
